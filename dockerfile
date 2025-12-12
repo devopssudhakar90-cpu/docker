@@ -7,6 +7,8 @@ FROM ${BASE_IMAGE}:${VERSION}
 RUN apt update && \
     apt install -y iputils-ping unzip openjdk-21-jdk wget
 
+EXPOSE 8443:
+
 # Configure JAVA_HOME and PATH
 RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64' >> /etc/bash.bashrc && \
     echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/bash.bashrc
