@@ -13,7 +13,8 @@ RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64' >> /etc/bash.bash
 
 # Install nginx
 RUN apt update && \
-    apt install -y nginx
+    apt install -y nginx && \
+    mkdir -p /var/lib/nginx /var/log/nginx /run/nginx
 
 # Start nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
