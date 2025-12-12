@@ -3,13 +3,10 @@ ARG VERSION=22.04
 
 FROM ${BASE_IMAGE}:${VERSION}
 
+# Install dependencies
 RUN apt update && \
-    apt install -y iputils-ping && \
-    apt install -y unzip && \
+    apt install -y iputils-ping unzip openjdk-21-jdk
 
-RUN apt install -y openjdk-21-jdk && \
-    export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64 && \
-    export PATH=$JAVA_HOME/bin/:$PATH &&
-    echo 'export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64' >> ~/.bashrc && \
-    echo 'export PATH=$JAVA_HOME/bin/:$PATH &&' >> ~/.bashrc && \
-    source ~/.bashrc
+# Configure JAVA_HOME and PATH
+RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64' >> /etc/bash.bashrc && \
+    echo 'export PATH=$JAVA_HOME/bin:$PATH' >> /etc/bash.bashrc
