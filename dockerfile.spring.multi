@@ -15,7 +15,7 @@ CMD ["java", "-jar", "app.jar"]
 #Used below image for batch B49 which gave zero vulnerabilities on Trivy Scan for OS
 FROM ubuntu:25.10 as image-stage
 WORKDIR /app
-RUN apt-get update && apt-get install -y openjdk-11-jre-headless && apt-get install ping -y
+RUN apt-get update && apt-get install -y openjdk-11-jre-headless && apt-get install iputils-ping -y
 COPY --from=build-stage /app/target/spring-petclinic-2.7.3.jar app.jar
 EXPOSE 8080
 CMD ["java", "-jar", "app.jar"]
