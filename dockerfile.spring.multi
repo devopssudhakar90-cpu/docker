@@ -1,0 +1,21 @@
+# Stage 2: Installing Maven Dependencies
+FROM maven:3.6.3-openjdk-11 AS build-stage
+WORKDIR /app
+COPY spring-petclinic/pom.xml .
+COPY spring-petclinic/src ./src
+RUN mvn package -DskipTests
+
+# Stage 3: Create the final image with the built application
+FROM eclipse-temurin:11-jre-alpine as image-stage
+WORKDIR /app
+COPY --from=build-stage /app/target/spring-petclinic-2.7.3.jar app.jar
+EXPOSE 8080
+CMD ["java", "-jar", "app.jar"]
+
+#Used below image for batch B49 which gave zero vulnerabilities on Trivy Scan for OS
+FROM ubuntu:25.10 as image-stage
+WORKDIR /app
+RUN apt-get update && apt-get install -y openjdk-11-jre-headless
+COPY --from=build-stage /app/target/spring-petclinic-2.7.3.jar app.jar
+EXPOSE 8080
+CMD ["java", "-jar", "app.jar"]
