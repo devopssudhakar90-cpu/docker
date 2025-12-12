@@ -16,7 +16,7 @@ RUN apt update && \
     apt install -y nginx
 
 # Start nginx in foreground
-CMD ["nginx", "-g", "daemon off;"]
+CMD service nginx start
 
 EXPOSE 80 443
 
