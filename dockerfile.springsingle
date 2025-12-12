@@ -1,0 +1,15 @@
+#git clone https://github.com/mavrick202/spring-petclinic.git
+
+# Stage 1: Build the application with Maven As a Single Stage
+# Which will create 833MB Image. This can be reduced by using MultiStage Build
+FROM maven:3.6.3-openjdk-11 as build-stage
+ENV VERSIOn="1.0"
+WORKDIR /app
+COPY spring-petclinic/pom.xml .
+COPY spring-petclinic/src ./src
+RUN mvn package -DskipTests
+CMD ["java", "-jar", "/app/target/spring-petclinic-2.7.3.jar"]
+
+#root@ip-10-40-1-111:~/spring-petclinic# docker images
+#REPOSITORY               TAG       IMAGE ID       CREATED          SIZE
+#spring                   v1        1fedd9a2204b   8 minutes ago    852MB
